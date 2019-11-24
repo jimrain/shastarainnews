@@ -1,0 +1,29 @@
+{% extends "pmvc/base_generic.html" %}
+
+{% block content %}
+    <p>Please select or create an account to work on:</p>
+
+    <div class="container">
+        <div class="row">
+            <form action="{% url 'pmvc:AccountSelectionHandler' %}" method="post">
+                {% csrf_token %}
+                <div style="display: flex;">
+                    <div class="col-sm-12">
+                        <select class="form-control", id="acct_select" name="acct_select">
+                            <option value="0">Create New Account</option>
+                            <option disabled>──────────</option>
+                            {% for account in accounts %}
+                                <option value="{{ account.id }}">{{ account.name }}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="col-sm-8">
+                        <!-- optional spacer: <div style="width: 8px;" /> -->
+                        <button type="submit" class="btn btn-success">Go</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

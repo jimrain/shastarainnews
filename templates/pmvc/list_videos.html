@@ -1,0 +1,28 @@
+{% extends "pmvc/base_generic.html" %}
+
+{% block content %}
+    <div class="container">
+
+
+  <p>Your Account has the following videos:</p>
+
+     <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Video ID</th>
+        <th>Title</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for vid in vid_list %}
+      <tr>
+        <td>{{ vid.id }}</td>
+        <td>{{ vid.title }}</td>
+        <td>{{ vid.description }}</td>
+      </tr>
+    {%  endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
