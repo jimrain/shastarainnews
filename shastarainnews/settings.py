@@ -80,7 +80,7 @@ if GCP_SERVER:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'shastarain',
+            'NAME': 'shastarainnews',
             'USER': 'rain',
             'PASSWORD': 'p0pch1ck',
             'HOST': 'localhost',
