@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from .models import Account, Video
-from .forms import VideoCreateForm
+from .forms import VideoCreateForm, NewCompanyForm
 # from .tasks import handle_ingest_video
 import boto3
 import shastarainnews.settings as settings
@@ -28,8 +28,8 @@ def AccountSelectionHandler(request):
     if selection == '0':
         # log.debug("Create New Company")
         # form = NewCompanyForm()
-        # return render(request, 'setools/create_company_form.html', {'form': form})
-        return redirect('pmvc:index')
+        # return render(request, 'pmvc/create_company_form.html', {'form': form})
+        return redirect('pmvc:AccountCreate')
     else:
         # log.debug("Company " + selection + " selected.")
         return redirect('pmvc:AccountSelected', selection)
@@ -40,6 +40,16 @@ def AccountSelected(request, account_id):
     response.set_cookie('pmvc_account_id', account_id)
     return response
 
+def AccountCreate(request):
+    if request.method == "POST":
+        form = NewCompanyForm(request.POST)
+        if form.is_valid():
+            account = form.save(commit=False)
+            account.save()
+            return redirect('pmvc:AccountSelected', account.id)
+    else:
+        form = NewCompanyForm()
+    return render(request, 'pmvc/create_company_form.html', {'form': form})
 
 def ListVideos(request, account_id):
     account = Account.objects.get(id=account_id)

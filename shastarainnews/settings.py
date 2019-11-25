@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from .server_info import GCP_SERVER
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,8 +26,6 @@ SECRET_KEY = '(9v@1^1*b2+b5-vzpo%kc!$swoz)o$&bt5s0%f#)x47ep#l85w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-GCP_SERVER = False
-
 ALLOWED_HOSTS = ['.shastarain.com', '35.230.104.232', 'localhost', '127.0.0.1']
 
 # Application definition
@@ -39,7 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pmvc.apps.PmvcConfig',
+    'crispy_forms',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

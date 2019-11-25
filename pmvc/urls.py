@@ -11,6 +11,7 @@ urlpatterns = [
     path('account_home', views.AccountHome, name='AccountHome'),
     path('account_selection_handler', views.AccountSelectionHandler, name='AccountSelectionHandler'),
     path('account_selected/<int:account_id>', views.AccountSelected, name='AccountSelected'),
+    path('account_create', views.AccountCreate, name='AccountCreate'),
     path('list_videos/<int:account_id>', views.ListVideos, name='ListVideos'),
     path('ingest_video/<int:account_id>', views.IngestVideo, name='IngestVideo'),
 ]
