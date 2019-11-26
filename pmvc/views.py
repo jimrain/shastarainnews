@@ -4,6 +4,8 @@ from .forms import VideoCreateForm, NewCompanyForm
 # from .tasks import handle_ingest_video
 import boto3
 import shastarainnews.settings as settings
+from google.cloud import storage
+from requests.utils import requote_uri
 
 def index(request):
     # log.debug("In the index view")
@@ -56,9 +58,6 @@ def ListVideos(request, account_id):
     vids = Video.objects.filter(account=account)
     return render(request, 'pmvc/list_videos.html', {'vid_list': vids})
 
-# def IngestVideo(request, account_id):
-#     account = Account.objects.get(id=account_id)
-#     return render(request, 'pmvc/ingest_video.html', {'account': account})
 
 def handle_ingest_video(video_id, dm):
     video = Video.objects.get(pk=video_id)
@@ -70,17 +69,40 @@ def handle_ingest_video(video_id, dm):
     bucket = s3.Bucket(settings.AWS_VIDEO_BUCKET)
     bucket.put_object(Key=filename, Body=dm)
 
+
+def handle_ingest_video_gcs(video_id, source_file_name):
+    """Uploads a file to the bucket."""
+    video = Video.objects.get(pk=video_id)
+
+    storage_client = storage.Client()
+    bucket_name = "jrainville_video_bucket_1"
+    bucket = storage_client.get_bucket(bucket_name)
+    destination_blob_name = requote_uri('videos/' + video.title + '/digital_master.mp4')
+    blob = bucket.blob(destination_blob_name)
+    blob.upload_from_file(source_file_name)
+    # https://storage.cloud.google.com/jrainville_video_bucket_1/videos/Bear%20Shopping/digital_master.mp4?_ga=2.105220675.-1900619790.1569880247
+    dm_url = "https://storage.cloud.google.com/" + bucket_name + "/" + destination_blob_name
+    print("DM URL: " + dm_url)
+    video.dm_url = dm_url
+    video.save()
+
+    print('File {} uploaded to {}.'.format(
+        source_file_name,
+        destination_blob_name))
+
+
 def IngestVideo(request, account_id):
     if request.method == 'POST':
         form = VideoCreateForm(request.POST, request.FILES)
+
         if form.is_valid():
             account = Account.objects.get(id=account_id)
             # instance = Video(file_field=request.FILES['file'])
             instance = Video(title=request.POST['title'], description=request.POST['description'], account=account)
             instance.save()
             # print (request.FILES['digital_master'].path)
-            handle_ingest_video(instance.id, request.FILES['digital_master'])
-            return HttpResponseRedirect('/success/url/')
+            handle_ingest_video_gcs(instance.id, request.FILES['digital_master'])
+            return redirect('pmvc:ListVideos', account_id)
     else:
         form = VideoCreateForm()
     return render(request, 'pmvc/upload_request.html', {'form': form})

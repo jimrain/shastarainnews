@@ -20,6 +20,7 @@ class Video(models.Model):
     description = models.TextField()
 
     digital_master = models.FileField(upload_to=account_video_media_directory_path, blank=True, null=True)
+    dm_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title

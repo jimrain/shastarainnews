@@ -136,3 +136,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#AWS Info
+AWS_ACCESS_KEY = "AKIAJJTFC2AYMV3UHTDA"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_VIDEO_BUCKET = "shastarain-video-file-bucket"
+
