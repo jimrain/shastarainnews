@@ -14,7 +14,7 @@ import os
 from .server_info import GCP_SERVER
 
 if GCP_SERVER:
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/jrainville/work_area/shastarainnews/CSE-Development-51e80d34a824.json"
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/jrainville/work_area/shastarainnews/credentials.json"
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
