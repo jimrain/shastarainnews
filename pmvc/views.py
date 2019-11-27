@@ -80,9 +80,8 @@ def handle_ingest_video_gcs(video_id, source_file_name):
     destination_blob_name = requote_uri('videos/' + video.title + '/digital_master.mp4')
     blob = bucket.blob(destination_blob_name)
     blob.upload_from_file(source_file_name)
-    # https://storage.cloud.google.com/jrainville_video_bucket_1/videos/Bear%20Shopping/digital_master.mp4?_ga=2.105220675.-1900619790.1569880247
-    dm_url = "https://storage.cloud.google.com/" + bucket_name + "/" + destination_blob_name
-    print("DM URL: " + dm_url)
+    dm_url = blob.public_url
+    # print("DM URL: " + dm_url)
     video.dm_url = dm_url
     video.save()
 
