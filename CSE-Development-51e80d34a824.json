@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fastly-cse-development",
+  "private_key_id": "51e80d34a82445cfb74be9376e3627f85eeccb22",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDc5/+aN8MLkcVd\nROZL1TreVNcKlJxCKaNj+VWXZSA1H1DaI3WWODYb53Ne5VXqTBvmLrpl01oDA1XY\nmnp8JHGO1v/VyRBMs9cyRvvPgsiLksam7YUBaPs1C2QqQYcn9RW5XQZXF62KsE+F\n0htS7vJ+vXb8nHBanVwqO5Qll2HjqoxoyNbDEurQ+yUz+cL/dLPgoCBiJbRNuwdE\nHZZRiVcFk90bGmjgAqX7o1BDryw5B5qESeHNODTeV8/sxedqNwzPxCA4dqN6tjEF\nQq4Nd5rhEHkowfAn/z6aKNOCufalR/BOn1B9R7wJpgVbC6/g+Gnpb+KuCi7fKUts\nYvLbgKBTAgMBAAECggEAA17m34uKRlrrEAlFGlMemtXgkiDCYaARBi1/yNeaLjVU\nHn/8A1bIPJTDhecp8HFI27JK1dLrxLAAV1XEGLDVqsBNFw4CWalE11eN8BSmyrpq\nnZFyPhtD+gM6fAqT7WAn/LQWrK2H0F3wWLJkCFftC1IIxsH8VOWhymMuV4R/0eF5\nD2ESByhCfaQAKgW7l2BzHGLNJY+c28ytDogBbtoK5m02u6jLbJJTJYycyBBLMbGU\nybuHhfXa2jDXyacueZ++HepAIjNnJ3dHVCZ6CFJwYusOeFDzMC/y+5ehVlfI4Ao9\nDbI11BjWlAvb4zAsV1s4ZhSdPAtoE6gkD/U4zt/xQQKBgQD4YKvngW/pHABqx/lw\n2SBDe+z/KP6IumYxo8f6rO/R7GDwudkj1lU95eLwqOqBw1lvUVCBu+ZY6ZLv0bO6\nAQ6Yuyuu8AGhbHrttsT6KKkudf6vDtkpC/XM8Vm3eEb4rNe8XWn0XaAJHYmSL+Yr\nib4KMPZ0KRoKkINwGW6JFFthTwKBgQDjr4DtJm1WNmO8+doFENC67nM/2boBvfJP\nr2wlJsgs6hDVoN0m/fc06s4c3xnZDg7QPSIDhroZYmpBxVGh8MhDhzB+esBv6cTJ\nmMflWnIVB+JUgHUxUHtSCGVmSaZkalRGZBW80B/YlXigd+5XZ7lpoKm8LLW+JaHV\nJ54zey1nvQKBgBtc6xNSGzYfM5yP81cPVJKasH1b0s7VWjTVyk4/hxwlYniiwN1F\n25Y6IUpKEavCDbRJzQi93p6k/N8WxyoSu7zvwdw/7K4P+Wr+26yDlj/cF/bJN/th\nqe6uGCgyQ/9Za1sBH48gUWUvr9w/EqhxQFJ3Gm+pp4jKavCKnLbVW0vZAoGBAMD/\nA0oCSKvLbr/BCg1BM61AcnCtHf5cBAmHqSPUu9lWju6GbO+gVuuEHTJb6o0SXXwm\nVa6nhRf/VBJsL8YVU6vp7DFJ29UBUs2Ps+G1yP4KsM7wFGa40c+3TjxmMaTsfIMu\nUz65LEVqbdWX03BDe+cNSNM5EtUbERKdgnwg7VwBAoGBANEg2JCGTzxfPDu1RgTT\nMwlB4Np2ok25t+UMDy4hVuMbUT66wvIbkMJObf7w4UGsZ5jx0I4SM8QyNoZp4pPo\ndpcJF4Sjsj70AVuQWDL8/w7VoHlqgQmDEkBm3kAE35dNQ0UzO62djKUldInK2K4r\nMBHoDr30sKFVvOLWPuDPf5Fz\n-----END PRIVATE KEY-----\n",
+  "client_email": "jrainville-video-acct@fastly-cse-development.iam.gserviceaccount.com",
+  "client_id": "108591220744254797298",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/jrainville-video-acct%40fastly-cse-development.iam.gserviceaccount.com"
+}
