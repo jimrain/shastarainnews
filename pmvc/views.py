@@ -18,7 +18,7 @@ def index(request):
 
 def AccountHome(request):
     if 'pmvc_account_id' in request.COOKIES:
-        account = Account.objects.get(account_id=request.COOKIES['pmvc_account_id'])
+        account = Account.objects.get(pk=request.COOKIES['pmvc_account_id'])
         return render(request, 'pmvc/account_selected.html', {'account': account})
     else:
         accounts = Account.objects.all()
