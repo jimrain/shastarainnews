@@ -1,11 +1,16 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .models import Account, Video
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import Account, Video, GcsAccessToken
 from .forms import VideoCreateForm, NewCompanyForm
 # from .tasks import handle_ingest_video
 import boto3
+import requests
 import shastarainnews.settings as settings
 from google.cloud import storage
-from requests.utils import requote_uri
+
+from .gcs_uploadhandler import GcsFileUploadHandler
+
 
 def index(request):
     # log.debug("In the index view")
@@ -42,6 +47,7 @@ def AccountSelected(request, account_id):
     response.set_cookie('pmvc_account_id', account_id)
     return response
 
+
 def AccountCreate(request):
     if request.method == "POST":
         form = NewCompanyForm(request.POST)
@@ -69,6 +75,41 @@ def handle_ingest_video(video_id, dm):
     bucket = s3.Bucket(settings.AWS_VIDEO_BUCKET)
     bucket.put_object(Key=filename, Body=dm)
 
+# def upload_file_to_gcs(video_id, source_file):
+#     access_token = get_access_token()
+#     video = Video.objects.get(pk=video_id)
+#     destination_file_name = requote_uri('videos/' + video.title + '/digital_master.mp4')
+#     bucket_name = "jrainville_video_bucket_1"
+#
+#     url = "https://storage.googleapis.com/upload/storage/v1/b/" + bucket_name + "/o?uploadType=resumable&name=" + destination_file_name
+#     headers = {'Content-Type': 'application/json', 'X-Upload-Content-Type': 'video/mp4',
+#                'Authorization': 'Bearer ' + access_token}
+#
+#     r = requests.post(url, data='', headers=headers)
+#
+#     if r.status_code >= 200 and r.status_code < 300:
+#         # print((r.status_code))
+#         print("Success")
+#         upload_info = r.text
+#         print(upload_info)
+#         the_file = video.digital_master
+#         chunk_size = 256 * 1024 * 2
+#         print("File size: " + str(the_file.size))
+#
+#         resumable_uri = r.headers['Location']
+#         chunk_pointer = 0
+#
+#         for chunk in the_file.chunks(chunk_size=chunk_size):
+#             the_range = str(chunk_pointer + "-" + str(chunk_pointer + chunk.len) + "/" + str(the_file.size))
+#             headers = {'Content-Length': chunk.len, "Content-Range": the_range}
+#             r = requests.put(resumable_uri, headers=headers, data=chunk)
+#             print(r.status_code)
+#
+#
+#     else:
+#         print("Fail!")
+#         print(r.status_code)
+#         print(r.text)
 
 def handle_ingest_video_gcs(video_id, source_file_name):
     """Uploads a file to the bucket."""
@@ -90,19 +131,32 @@ def handle_ingest_video_gcs(video_id, source_file_name):
         destination_blob_name))
 
 
+@csrf_exempt
 def IngestVideo(request, account_id):
+    # Set the upload handler to the custom GCS upload.
+    # request.upload_handlers = [GcsFileUploadHandler(request)]
+
     if request.method == 'POST':
         form = VideoCreateForm(request.POST, request.FILES)
 
         if form.is_valid():
             account = Account.objects.get(id=account_id)
             # instance = Video(file_field=request.FILES['file'])
-            instance = Video(title=request.POST['title'], description=request.POST['description'], account=account)
+
+            instance = Video(title=request.POST['title'], description=request.POST['description'], account=account,
+                             digital_master=request.FILES['digital_master'])
+            request.META['title'] = request.POST['title']
             instance.save()
             # print (request.FILES['digital_master'].path)
-            handle_ingest_video_gcs(instance.id, request.FILES['digital_master'])
+            # handle_ingest_video_gcs(instance.id, request.FILES['digital_master'])
+            # upload_file_to_gcs(instance.id, request.FILES['digital_master'])
             return redirect('pmvc:ListVideos', account_id)
     else:
         form = VideoCreateForm()
     return render(request, 'pmvc/upload_request.html', {'form': form})
 
+
+def tester(request):
+    #  token = get_access_token()
+    # print(token)
+    return redirect('pmvc:index')

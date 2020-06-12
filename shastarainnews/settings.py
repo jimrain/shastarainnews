@@ -16,9 +16,11 @@ from .server_info import GCP_SERVER
 if GCP_SERVER:
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/home/jrainville/work_area/shastarainnews/credentials.json"
 
+GS_CREDENTIALS = "/Users/jrainville/work_area/shastarainnews/CSE-Development-51e80d34a824.json"
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# print (BASE_DIR)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -42,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pmvc.apps.PmvcConfig',
     'crispy_forms',
+    'rest_framework',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -77,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'shastarainnews.wsgi.application'
 
-
+FILE_UPLOAD_HANDLERS = ("pmvc.gcs_uploadhandler.GcsFileUploadHandler", )
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

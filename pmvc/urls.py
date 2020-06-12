@@ -14,6 +14,7 @@ urlpatterns = [
     path('account_create', views.AccountCreate, name='AccountCreate'),
     path('list_videos/<int:account_id>', views.ListVideos, name='ListVideos'),
     path('ingest_video/<int:account_id>', views.IngestVideo, name='IngestVideo'),
+    path('tester', views.tester, name='Tester'),
 ]
 
 if settings.DEBUG:

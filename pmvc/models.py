@@ -1,5 +1,14 @@
 from django.db import models
 
+
+class GcsAccessToken(models.Model):
+    access_token = models.CharField(max_length=256, blank=True, null=True)
+    expiry = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self. access_token
+
+
 class Account(models.Model):
     name = models.CharField(max_length=30)
     enabled = models.BooleanField(default=True)

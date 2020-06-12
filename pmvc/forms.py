@@ -8,7 +8,10 @@ class NewCompanyForm(forms.ModelForm):
         fields = ('name', 'enabled')
 
 
-class VideoCreateForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    description = forms.CharField(max_length=500)
-    digital_master = forms.FileField()
+class VideoCreateForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = ['title', 'description', 'digital_master']
+    # title = forms.CharField(max_length=50)
+    # description = forms.CharField(max_length=500)
+    # digital_master = forms.FileField()
