@@ -1,8 +1,15 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
 from . import views
+
+from rest_framework import routers
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'accounts', views.AccountViewSet)
+router.register(r'videos', views.VideoViewSet)
 
 app_name = 'pmvc'
 
@@ -15,6 +22,7 @@ urlpatterns = [
     path('list_videos/<int:account_id>', views.ListVideos, name='ListVideos'),
     path('ingest_video/<int:account_id>', views.IngestVideo, name='IngestVideo'),
     path('tester', views.tester, name='Tester'),
+    path('api/', include(router.urls)),
 ]
 
 if settings.DEBUG:

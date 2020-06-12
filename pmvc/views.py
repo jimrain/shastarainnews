@@ -11,6 +11,34 @@ from google.cloud import storage
 
 from .gcs_uploadhandler import GcsFileUploadHandler
 
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from . models import Account, Video
+from pmvc.serializers import UserSerializer, GroupSerializer, AccountSerializer, VideoSerializer
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+class VideoViewSet(viewsets.ModelViewSet):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
+
 
 def index(request):
     # log.debug("In the index view")
