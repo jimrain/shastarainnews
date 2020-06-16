@@ -151,3 +151,10 @@ AWS_ACCESS_KEY = "AKIAJJTFC2AYMV3UHTDA"
 AWS_SECRET_ACCESS_KEY = "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"
 AWS_VIDEO_BUCKET = "shastarain-video-file-bucket"
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
