@@ -209,7 +209,7 @@ def aes128key_create(request, format=None):
         return Response(serializer.data)
 
     if request.method == 'POST':
-        data = request.data
+        data = request.data.copy()
         data['key'] = get_random_string(length=16)
         serializer = Aes128KeySerializer(data=data)
         if serializer.is_valid():
