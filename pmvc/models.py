@@ -6,7 +6,7 @@ class GcsAccessToken(models.Model):
     expiry = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
-        return self. access_token
+        return self.access_token
 
 
 class Account(models.Model):
@@ -18,8 +18,8 @@ class Account(models.Model):
 
 
 def account_video_media_directory_path(instance, filename):
-    print (instance)
-    print (filename)
+    print(instance)
+    print(filename)
     return '{0}/{1}/{2}'.format(instance.account.id, instance.id, instance.title)
 
 
@@ -34,6 +34,7 @@ class Video(models.Model):
     def __str__(self):
         return self.title
 
+
 class Rendition(models.Model):
     name = models.CharField(max_length=20)
     url = models.URLField()
@@ -41,3 +42,11 @@ class Rendition(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Aes128Key(models.Model):
+    hash = models.CharField(max_length=256, primary_key=True)
+    key = models.CharField(max_length=32)  # JMR - is it ok to store this as a string?
+
+    def __str__(self):
+        return self.key

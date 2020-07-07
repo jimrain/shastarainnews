@@ -7,5 +7,17 @@
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-success">Save</button>
+  <script>
+$(function () {
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $.each(data.result.files, function (index, file) {
+                $('<p></p>').text(file.name).appendTo(document.body);
+            });
+        }
+    });
+});
+</script>
   </form>
 {% endblock %}

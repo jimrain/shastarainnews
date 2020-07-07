@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from . models import Account, Video
+from . models import Account, Video, Aes128Key
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -28,3 +28,8 @@ class VideoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Video
         fields = ['url', 'id', 'title', 'description']
+
+class Aes128KeySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Aes128Key
+        fields = ['hash', 'key']

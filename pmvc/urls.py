@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 from rest_framework import routers
@@ -23,6 +24,8 @@ urlpatterns = [
     path('ingest_video/<int:account_id>', views.IngestVideo, name='IngestVideo'),
     path('tester', views.tester, name='Tester'),
     path('api/', include(router.urls)),
+    path('api/aes128key/', views.aes128key_create),
+    path('api/aes128key/<int:pk>', views.aes128key_detail),
 ]
 
 if settings.DEBUG:

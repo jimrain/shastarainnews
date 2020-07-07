@@ -13,8 +13,17 @@ from .gcs_uploadhandler import GcsFileUploadHandler
 
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from . models import Account, Video
-from pmvc.serializers import UserSerializer, GroupSerializer, AccountSerializer, VideoSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import permissions
+from rest_framework import status
+from rest_framework.response import Response
+
+from django.utils.crypto import get_random_string
+
+from . models import Account, Video, Aes128Key
+from pmvc.serializers import UserSerializer, GroupSerializer, AccountSerializer, VideoSerializer, Aes128KeySerializer
+
+# from Crypto import Random
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -188,3 +197,49 @@ def tester(request):
     #  token = get_access_token()
     # print(token)
     return redirect('pmvc:index')
+
+
+# Rest API Views ****************************
+@api_view(['GET', 'POST'])
+@permission_classes((permissions.AllowAny,))
+def aes128key_create(request, format=None):
+    if request.method == 'GET':
+        keys = Aes128Key.objects.all()
+        serializer = Aes128KeySerializer(keys, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        data = request.data
+        data['key'] = get_random_string(length=16)
+        serializer = Aes128KeySerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes((permissions.AllowAny,))
+def aes128key_detail(request, pk, format=None):
+    """
+    Retrieve, update or delete an aes128key
+    """
+    try:
+        aes128key = Aes128Key.objects.get(pk=pk)
+    except Aes128Key.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == "GET":
+        serializer = Aes128KeySerializer(aes128key)
+        return Response(serializer.data)
+
+    if request.method == "PUT":
+        serializer = Aes128KeySerializer(aes128key)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == "DELETE":
+        aes128key.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

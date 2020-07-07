@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'pmvc.apps.PmvcConfig',
     'crispy_forms',
     'rest_framework',
+    'chunked_upload',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
