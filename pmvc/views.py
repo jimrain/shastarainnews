@@ -18,6 +18,8 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework.response import Response
 
+from json import loads
+
 from django.utils.crypto import get_random_string
 
 from . models import Account, Video, Aes128Key
@@ -209,9 +211,11 @@ def aes128key_create(request, format=None):
         return Response(serializer.data)
 
     if request.method == 'POST':
-        data = request.data
-        data['key'] = get_random_string(length=16)
-        serializer = Aes128KeySerializer(data=data)
+        # The django rest framework docs have not caught up with modern forms of django:
+        # the correct way to read the body of a json request is to use json.loads()
+        json = loads(request.body)
+        json['key'] = get_random_string(length=16)
+        serializer = Aes128KeySerializer(data=json)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
