@@ -209,8 +209,9 @@ def aes128key_create(request, format=None):
         return Response(serializer.data)
 
     if request.method == 'POST':
-        ldata = {"hash": request.data["hash"], 'key': get_random_string(length=16)}
-        serializer = Aes128KeySerializer(data=ldata)
+        data = request.data
+        data['key'] = get_random_string(length=16)
+        serializer = Aes128KeySerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
