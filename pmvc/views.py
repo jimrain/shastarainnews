@@ -213,9 +213,9 @@ def aes128key_create(request, format=None):
     if request.method == 'POST':
         # The django rest framework docs have not caught up with modern forms of django:
         # the correct way to read the body of a json request is to use json.loads()
-        data = request.data
+        # data = request.data
         # data['key'] = get_random_string(length=16)
-        serializer = Aes128KeySerializer(data=data)
+        serializer = Aes128KeySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
